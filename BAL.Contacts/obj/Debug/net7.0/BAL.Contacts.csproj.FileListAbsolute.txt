@@ -1,0 +1,17 @@
+D:\Projects\ContactsWebApi\BAL.Contacts\bin\Debug\net7.0\BAL.Contacts.deps.json
+D:\Projects\ContactsWebApi\BAL.Contacts\bin\Debug\net7.0\BAL.Contacts.runtimeconfig.json
+D:\Projects\ContactsWebApi\BAL.Contacts\bin\Debug\net7.0\BAL.Contacts.dll
+D:\Projects\ContactsWebApi\BAL.Contacts\bin\Debug\net7.0\BAL.Contacts.pdb
+D:\Projects\ContactsWebApi\BAL.Contacts\bin\Debug\net7.0\DAL.Contacts.dll
+D:\Projects\ContactsWebApi\BAL.Contacts\bin\Debug\net7.0\DAL.Contacts.pdb
+D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.csproj.AssemblyReference.cache
+D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.AssemblyInfoInputs.cache
+D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.AssemblyInfo.cs
+D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.csproj.CoreCompileInputs.cache
+D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.csproj.CopyComplete
+D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.dll
+D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\refint\BAL.Contacts.dll
+D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.pdb
+D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.genruntimeconfig.cache
+D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\ref\BAL.Contacts.dll
