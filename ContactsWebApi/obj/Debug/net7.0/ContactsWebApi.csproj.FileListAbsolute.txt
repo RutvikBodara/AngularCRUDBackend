@@ -45,3 +45,4 @@ D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\refint\ContactsWebApi
 D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\ContactsWebApi.pdb
 D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\ContactsWebApi.genruntimeconfig.cache
 D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\ref\ContactsWebApi.dll
+D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\ContactsWebApi.sourcelink.json

@@ -10,7 +10,7 @@ namespace BAL.Contacts.Interface
 {
     public interface IBAL_Contacts_Type_CRUD
     {
-        Task<IEnumerable<T>> get<T>(string? name, int? id,string? typeList);
+        Task<IQueryable<T>> get<T>(string? name, int? id,string? typeList);
         //Task<T> add<T>(DAL.Contacts.ViewModels.Contacts.contactsDetailViewModel<T> requestData);
         Task add(contactsDetailViewModel<string> requestData);
         Task<bool> update<T>(ContactType contacts);

@@ -19,7 +19,7 @@ namespace BAL.Contacts.Repository
         {
             _db = db;
         }
-        public async Task<IEnumerable<T>> get<T>(string? name, int? id, string? typeList)
+        public async Task<IQueryable<T>> get<T>(string? name, int? id, string? typeList)
         {
 
             List<int> searchTypeList = new List<int>();
@@ -28,10 +28,10 @@ namespace BAL.Contacts.Repository
                 searchTypeList = typeList.Split(',').Select(int.Parse).ToList();
             }
 
-            var contactTypeList = _db.ContactTypes.ToList();
-            var contactList = _db.Contacts.ToList();
-            IEnumerable<T> fetchContactsType = (IEnumerable<T>)(from x1 in contactTypeList
-                                                                join x2 in contactList on x1.Id equals x2.ContactTypeId into temp
+            //var contactTypeList = _db.ContactTypes.ToList();
+            //var contactList = _db.Contacts.ToList();
+            IQueryable<T> fetchContactsType = (IQueryable<T>)(from x1 in _db.ContactTypes
+                                                                join x2 in _db.Contacts on x1.Id equals x2.ContactTypeId into temp
                                                                 from X2 in temp.DefaultIfEmpty()
                                                                 where (name == null || x1.Name.ToLower().Contains(name.ToLower()))
                                                                    && (id == null || id == x1.Id)
@@ -80,7 +80,8 @@ namespace BAL.Contacts.Repository
             if (await exists<ContactType>(id))
             {
                 ContactType? details = await _db.ContactTypes.FirstOrDefaultAsync(x => x.Id == id);
-                if (details != null)
+                bool checkAvailContact = _db.Contacts.Any(x => x.ContactTypeId == id);
+                if (details != null && !checkAvailContact)
                 {
                     details.Isdeleted = true;
                     _db.ContactTypes.Update(details);
