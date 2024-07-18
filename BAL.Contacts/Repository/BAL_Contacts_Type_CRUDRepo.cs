@@ -19,6 +19,7 @@ namespace BAL.Contacts.Repository
         {
             _db = db;
         }
+
         public async Task<IQueryable<T>> get<T>(string? name, int? id, string? typeList)
         {
 
@@ -31,42 +32,53 @@ namespace BAL.Contacts.Repository
             //var contactTypeList = _db.ContactTypes.ToList();
             //var contactList = _db.Contacts.ToList();
             IQueryable<T> fetchContactsType = (IQueryable<T>)(from x1 in _db.ContactTypes
-                                                                join x2 in _db.Contacts on x1.Id equals x2.ContactTypeId into temp
-                                                                from X2 in temp.DefaultIfEmpty()
-                                                                where (name == null || x1.Name.ToLower().Contains(name.ToLower()))
-                                                                   && (id == null || id == x1.Id)
-                                                                   && x1.Isdeleted != true
-                                                                   && (typeList == null || searchTypeList.Any(x => x == x1.Id ))
-                                                                group new { x1, X2 } by new { x1.Id, x1.Name } into G
-                                                                orderby G.Key.Id
-                                                                select new DAL_ContactTypeViewModel()
-                                                                {
-                                                                    id = G.Key.Id,
-                                                                    name = G.Key.Name,
-                                                                    count = G.Count(g => g.X2 != null)
-                                                                });
+                                                              join x2 in _db.Contacts on x1.Id equals x2.ContactTypeId into temp
+                                                              from X2 in temp.DefaultIfEmpty()
+                                                              where (name == null || x1.Name.ToLower().Contains(name.ToLower()))
+                                                                 && (id == null || id == x1.Id)
+                                                                 && x1.Isdeleted != true
+                                                                 && (typeList == null || searchTypeList.Any(x => x == x1.Id))
+                                                              group new { x1, X2 } by new { x1.Id, x1.Name } into G
+                                                              orderby G.Key.Id
+                                                              select new DAL_ContactTypeViewModel()
+                                                              {
+                                                                  id = G.Key.Id,
+                                                                  name = G.Key.Name,
+                                                                  count = G.Count(g => g.X2 != null)
+                                                              });
 
             return fetchContactsType;
 
         }
-        public async Task add(DAL.Contacts.ViewModels.Contacts.contactsDetailViewModel<string> requestData)
+        public async Task<bool> add(DAL.Contacts.ViewModels.Contacts.contactsDetailViewModel<string> requestData)
         {
-            ContactType contactType = new ContactType();
-            contactType.Name = requestData.name;
-            _db.ContactTypes.Add(contactType);
-            await _db.SaveChangesAsync();
+            bool checkDublicate = _db.ContactTypes.Any(x => x.Name.ToLower() == requestData.name.ToLower() && x.Isdeleted != true);
+            if (!checkDublicate)
+            {
+                ContactType contactType = new ContactType();
+                contactType.Name = requestData.name;
+                _db.ContactTypes.Add(contactType);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
         public async Task<bool> update<T>(ContactType contactsType)
         {
             if (await exists<ContactType>(contactsType.Id))
             {
                 ContactType? details = await _db.ContactTypes.FirstOrDefaultAsync(x => x.Id == contactsType.Id);
-                if (details != null)
+                bool checkDublicate = _db.ContactTypes.Any(x => x.Name.ToLower() == contactsType.Name.ToLower() && x.Id != contactsType.Id && x.Isdeleted != true);
+                if (!checkDublicate)
                 {
-                    details.Name = contactsType.Name;
-                    _db.ContactTypes.Update(details);
-                    _db.SaveChanges();
-                    return true;
+                    if (details != null)
+                    {
+                        details.Name = contactsType.Name;
+                        _db.ContactTypes.Update(details);
+                        _db.SaveChanges();
+                        return true;
+                    }
+                    return false;
                 }
                 return false;
             }

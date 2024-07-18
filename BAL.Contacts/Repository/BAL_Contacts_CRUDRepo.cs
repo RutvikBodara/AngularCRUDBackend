@@ -47,13 +47,19 @@ namespace BAL.Contacts.Repository
             return fetchContacts;
 
         }
-        public async Task add(DAL.Contacts.ViewModels.Contacts.contactsDetailViewModel<string> requestData)
+        public async Task<bool> add(DAL.Contacts.ViewModels.Contacts.contactsDetailViewModel<string> requestData)
         {
-            Contact contact = new Contact();
-            contact.Name = requestData.name;
-            contact.Surname = requestData.surname;
-            _db.Contacts.Add(contact);
-            await _db.SaveChangesAsync();
+            bool checkDublicate = _db.Contacts.Any(x => x.Name.ToLower() == requestData.name.ToLower()&& x.Surname.ToLower() == requestData.surname.ToLower() && x.Isdeleted != true);
+            if (!checkDublicate)
+            {
+                Contact contact = new Contact();
+                contact.Name = requestData.name;
+                contact.Surname = requestData.surname;
+                _db.Contacts.Add(contact);
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
         public async Task<bool> update<T>(Contact contacts)
         {
@@ -62,11 +68,16 @@ namespace BAL.Contacts.Repository
                 Contact? details = await _db.Contacts.FirstOrDefaultAsync(x => x.Id == contacts.Id);
                 if (details != null)
                 {
-                    details.Name = contacts.Name;
-                    details.Surname = contacts.Surname;
-                    _db.Contacts.Update(details);
-                    _db.SaveChanges();
-                    return true;
+                    bool checkDublicate = _db.Contacts.Any(x => x.Name.ToLower() == contacts.Name.ToLower() && x.Surname.ToLower() == contacts.Surname.ToLower()  &&x.Id != contacts.Id && x.Isdeleted != true);
+                    if (!checkDublicate)
+                    {
+                        details.Name = contacts.Name;
+                        details.Surname = contacts.Surname;
+                        _db.Contacts.Update(details);
+                        _db.SaveChanges();
+                        return true;
+                    }
+                    return false;
                 }
                 return false;
             }

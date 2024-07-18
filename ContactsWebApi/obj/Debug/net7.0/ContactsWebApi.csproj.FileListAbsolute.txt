@@ -46,3 +46,8 @@ D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\ContactsWebApi.pdb
 D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\ContactsWebApi.genruntimeconfig.cache
 D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\ref\ContactsWebApi.dll
 D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\ContactsWebApi.sourcelink.json
+D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
+D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll

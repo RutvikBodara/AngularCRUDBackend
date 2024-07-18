@@ -2,6 +2,7 @@ using BAL.Contacts.Repository;
 using DAL.Contacts.DataModels;
 using DAL.Contacts.ViewModels.API.Output;
 using DAL.Contacts.ViewModels.ContactType;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Writers;
@@ -11,6 +12,7 @@ namespace ContactsWebApi.Controllers
 {
     [Route("/contacts/[controller]")]
     [ApiController]
+    //[ContactsWebApi.Controllers.Auth.CustomAuth(1)]
     public class ContactsController : ControllerBase
     {
         private readonly BAL.Contacts.Interface.IBAL_Contacts_CRUD _IBAL_Contacts_CRUD;
@@ -116,12 +118,11 @@ namespace ContactsWebApi.Controllers
                 }
                 else
                 {
-                    errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 105);
+                    errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 107);
                     responseAPI.code = errorCodeValue.errorCode;
                     responseAPI.message = errorCodeValue.message;
                     return responseAPI;
                 }
-
             }
             catch (Exception ex)
             {
@@ -169,7 +170,14 @@ namespace ContactsWebApi.Controllers
                     return responseAPI;
                 }
 
-                await _IBAL_Contacts_CRUD.add(requestData);
+                bool dublicateCheck = await _IBAL_Contacts_CRUD.add(requestData);
+                if(!dublicateCheck)
+                {
+                    errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 107);
+                    responseAPI.code = errorCodeValue.errorCode;
+                    responseAPI.message = errorCodeValue.message;
+                    return responseAPI;
+                }
                 errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 100);
                 responseAPI.code = errorCodeValue.errorCode;
                 responseAPI.message = errorCodeValue.message;

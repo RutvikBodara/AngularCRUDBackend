@@ -12,7 +12,7 @@ namespace BAL.Contacts.Interface
     {
         Task<IQueryable<T>> get<T>(string? name, int? id,string? typeList);
         //Task<T> add<T>(DAL.Contacts.ViewModels.Contacts.contactsDetailViewModel<T> requestData);
-        Task add(contactsDetailViewModel<string> requestData);
+        Task<bool> add(contactsDetailViewModel<string> requestData);
         Task<bool> update<T>(ContactType contacts);
         Task<bool> delete<T>(int id);
         Task<bool> exists<T>(int id) where T : class;

@@ -2,6 +2,7 @@
 using DAL.Contacts.DataModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using System.Runtime.CompilerServices;
 using System.Security.AccessControl;
 using System.Security.Principal;
 
@@ -27,6 +28,18 @@ namespace BAL.Contacts.Repository
                                     });
             return result;
         }
+        //public async Task<bool> columnExist<T>(string tableName, string columnName)
+        //{
+        //    // Get the entity type
+        //    var entityType = _db.Model.GetEntityTypes()
+        //                        .FirstOrDefault(t => t.GetTableName().Equals(tableName, StringComparison.OrdinalIgnoreCase));
 
+        //    if (entityType == null)
+        //    {
+        //        return false;
+        //    }
+        //    var column = entityType.GetProperties().FirstOrDefault(p => p.GetColumnName().Equals(columnName, StringComparison.OrdinalIgnoreCase));
+        //    return column != null;
+        //}
     }
 }

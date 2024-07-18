@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ContactsWebApi.Controllers
 {
     [Route("/contacts/[controller]")]
+    [ApiController]
     public class ContactsTypeController : Controller
     {
         private readonly BAL.Contacts.Interface.IBAL_Contacts_CRUD _IBAL_Contacts_CRUD;
@@ -116,7 +117,7 @@ namespace ContactsWebApi.Controllers
                 }
                 else
                 {
-                    errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 105);
+                    errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 107);
                     responseAPI.code = errorCodeValue.errorCode;
                     responseAPI.message = errorCodeValue.message;
                     return responseAPI;
@@ -127,7 +128,7 @@ namespace ContactsWebApi.Controllers
             {
                 var errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 101);
                 responseAPI.code = errorCodeValue.errorCode;
-                responseAPI.message = errorCodeValue.message;
+                responseAPI.message = errorCodeValue.message + "( " + ex.ToString() + " )";
                 return responseAPI;
             }
         }
@@ -170,7 +171,14 @@ namespace ContactsWebApi.Controllers
                     return responseAPI;
                 }
 
-                await _IBAL_Contacts_Type_TypeCRUD.add(requestData);
+                bool checkDublicate = await _IBAL_Contacts_Type_TypeCRUD.add(requestData);
+                if(!checkDublicate)
+                {
+                    errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 107);
+                    responseAPI.code = errorCodeValue.errorCode;
+                    responseAPI.message = errorCodeValue.message;
+                    return responseAPI;
+                }
                 errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 100);
                 responseAPI.code = errorCodeValue.errorCode;
                 responseAPI.message = errorCodeValue.message;

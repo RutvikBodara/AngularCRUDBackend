@@ -9,6 +9,7 @@ namespace BAL.Contacts.Interface
     public interface ICommonMethods
     {
        Task<IEnumerable<T>> AddErrorCode<T>(string segment);
-        
+
+        //Task<bool> dublicateCheck(string tableName, string columnName, string value);
     }
 }

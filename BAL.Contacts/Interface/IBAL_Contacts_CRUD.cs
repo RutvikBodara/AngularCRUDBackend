@@ -14,7 +14,7 @@ namespace BAL.Contacts.Interface
     {
         Task<IEnumerable<T>> get<T>(string? name,string? surname , int? id, string? typeList);
         //Task<T> add<T>(DAL.Contacts.ViewModels.Contacts.contactsDetailViewModel<T> requestData);
-        Task add(contactsDetailViewModel<string> requestData);
+        Task<bool> add(contactsDetailViewModel<string> requestData);
         Task<bool> update<T>(Contact contacts);
         Task<bool> delete<T>(int id);
         Task<bool> exists<T>(int id) where T : class;
