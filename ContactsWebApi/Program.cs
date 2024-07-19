@@ -22,9 +22,11 @@ builder.Services.AddCors(options =>
         .AllowAnyHeader()
         .AllowAnyMethod());
 });
+builder.Services.AddScoped<IBAL_Jwt_Auth_Interface,BAL_Jwt_Auth_InterfaceRepo>();
 builder.Services.AddScoped<IBAL_Contacts_CRUD, BAL_Contacts_CRUDRepo>();
 builder.Services.AddScoped<ICommonMethods,CommonMethodsRepo>();
 builder.Services.AddScoped<IBAL_Contacts_Type_CRUD, BAL_Contacts_Type_CRUDRepo>();
+builder.Services.AddHttpContextAccessor();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

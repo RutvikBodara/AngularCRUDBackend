@@ -1,7 +1,9 @@
 ﻿using BAL.Contacts.Interface;
 using DAL.Contacts.DataModels;
+using DAL.Contacts.ViewModels.Accounts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using System.Diagnostics.Metrics;
 using System.Runtime.CompilerServices;
 using System.Security.AccessControl;
 using System.Security.Principal;
@@ -27,6 +29,15 @@ namespace BAL.Contacts.Repository
                                         message=x1.ErrorDescription
                                     });
             return result;
+        }
+        public async Task<bool> VerifyCredentials(AccountDetailsViewModel data)
+        {
+            return true;
+        }
+        public async Task<Account?> GetAccountDetails(string username)
+        {
+            Account? account =await _db.Accounts.FirstOrDefaultAsync(x => x.Username.ToLower() == username.ToLower());
+            return account;
         }
         //public async Task<bool> columnExist<T>(string tableName, string columnName)
         //{

@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 
 namespace ContactsWebApi.Controllers
 {
-    [Route("/contacts/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     //[ContactsWebApi.Controllers.Auth.CustomAuth(1)]
     public class ContactsController : ControllerBase

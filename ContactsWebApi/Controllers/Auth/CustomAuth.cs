@@ -6,7 +6,6 @@ using BAL.Contacts.Interface;
 
 namespace ContactsWebApi.Controllers.Auth
 {
-
     [AttributeUsage(AttributeTargets.All)]
     public class CustomAuth : ActionFilterAttribute, IAuthorizationFilter
     {

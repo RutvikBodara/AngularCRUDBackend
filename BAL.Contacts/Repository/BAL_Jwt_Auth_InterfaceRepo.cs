@@ -1,4 +1,5 @@
-﻿using DAL.Contacts.ViewModels.JWT;
+﻿using BAL.Contacts.Interface;
+using DAL.Contacts.ViewModels.JWT;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -12,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace BAL.Contacts.Repository
 {
-    public class BAL_Jwt_Auth_InterfaceRepo
+    public class BAL_Jwt_Auth_InterfaceRepo:IBAL_Jwt_Auth_Interface
     {
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly IConfiguration Configuration;
@@ -26,7 +27,8 @@ namespace BAL.Contacts.Repository
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, UserData.Email),
-                new Claim(ClaimTypes.Role, UserData.Role.ToString()),
+                //new Claim(ClaimTypes.Role, UserData.Role.ToString()),
+                new Claim("UserName", UserData.Username.ToString()),
                 new Claim("AccountId", UserData.AccountId.ToString()),
                 new Claim("Roleid" , UserData.Roleid.ToString() ?? string.Empty),
             };
@@ -91,8 +93,7 @@ namespace BAL.Contacts.Repository
             var jwt = new JwtSecurityTokenHandler().ReadJwtToken(token);
             model.AccountId = int.Parse(jwt.Claims.First(x => x.Type == "AccountId").Value);
             model.Email = jwt.Claims.First(x => x.Type == ClaimTypes.Email).Value;
-            model.Role = int.Parse(jwt.Claims.First(x => x.Type == ClaimTypes.Role).Value);
-            model.Roleid = int.Parse(jwt.Claims.First(y => y.Type == "Roleid").Value);
+            model.Username = jwt.Claims.First(x => x.Type == "AccountId").Value;
             return model;
         }
     }
