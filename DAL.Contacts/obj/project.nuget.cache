@@ -1,10 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "wL+Z7eLBwfIXoBZ0DS05w7qnqDOieI2v//tQKkARX0hpbIAjGsOqaJ54hvn0cHyE4Hp4EFnrN8cGsW1RfcocJg==",
+  "dgSpecHash": "u5XoEf2BOBBle+/VNkwS8rE26TgefYwK+T8FvgZLjUW+cwbWNof3G+P3+L+BUl3iBqrosKmVbNRU7MfGo3bPUA==",
   "success": true,
   "projectFilePath": "D:\\Projects\\ContactsWebApi\\DAL.Contacts\\DAL.Contacts.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pci92\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
+    "C:\\Users\\pci92\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
     "C:\\Users\\pci92\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.20\\microsoft.entityframeworkcore.7.0.20.nupkg.sha512",
     "C:\\Users\\pci92\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.20\\microsoft.entityframeworkcore.abstractions.7.0.20.nupkg.sha512",
     "C:\\Users\\pci92\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\7.0.20\\microsoft.entityframeworkcore.analyzers.7.0.20.nupkg.sha512",

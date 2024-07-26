@@ -1,5 +1,6 @@
 ﻿using DAL.Contacts.DataModels;
 using DAL.Contacts.ViewModels.Accounts;
+using Microsoft.EntityFrameworkCore.Query;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace BAL.Contacts.Interface
 
         Task<bool> VerifyCredentials(AccountDetailsViewModel data);
         Task<Account?> GetAccountDetails(string username);
+
+        Task<IEnumerable<Country>> GetCountryList();
 
         //Task<bool> dublicateCheck(string tableName, string columnName, string value);
     }

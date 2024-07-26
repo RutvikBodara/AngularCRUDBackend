@@ -39,6 +39,10 @@ namespace BAL.Contacts.Repository
             Account? account =await _db.Accounts.FirstOrDefaultAsync(x => x.Username.ToLower() == username.ToLower());
             return account;
         }
+        public async Task<IEnumerable<Country>> GetCountryList()
+        {
+            return _db.Countries.ToList();
+        }
         //public async Task<bool> columnExist<T>(string tableName, string columnName)
         //{
         //    // Get the entity type

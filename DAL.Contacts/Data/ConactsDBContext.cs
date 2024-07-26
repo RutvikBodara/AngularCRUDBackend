@@ -20,11 +20,17 @@ public partial class ConactsDBContext : DbContext
 
     public virtual DbSet<AccountType> AccountTypes { get; set; }
 
+    public virtual DbSet<Category> Categories { get; set; }
+
     public virtual DbSet<Contact> Contacts { get; set; }
 
     public virtual DbSet<ContactType> ContactTypes { get; set; }
 
+    public virtual DbSet<Country> Countries { get; set; }
+
     public virtual DbSet<ErrorCode> ErrorCodes { get; set; }
+
+    public virtual DbSet<Product> Products { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -36,6 +42,11 @@ public partial class ConactsDBContext : DbContext
         modelBuilder.Entity<AccountType>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("AccountType_pkey");
+        });
+
+        modelBuilder.Entity<Category>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("Category_pkey");
         });
 
         modelBuilder.Entity<Contact>(entity =>
@@ -50,9 +61,23 @@ public partial class ConactsDBContext : DbContext
             entity.HasKey(e => e.Id).HasName("ContactTypes_pkey");
         });
 
+        modelBuilder.Entity<Country>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("Country_pkey");
+        });
+
         modelBuilder.Entity<ErrorCode>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("ErrorCodes_pkey");
+        });
+
+        modelBuilder.Entity<Product>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("Products_pkey");
+
+            entity.HasOne(d => d.Category).WithMany(p => p.Products)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("category_fkey");
         });
 
         OnModelCreatingPartial(modelBuilder);
