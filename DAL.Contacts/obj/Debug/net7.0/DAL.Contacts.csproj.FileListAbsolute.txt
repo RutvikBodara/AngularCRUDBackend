@@ -7,9 +7,9 @@ D:\Projects\ContactsWebApi\DAL.Contacts\obj\Debug\net7.0\DAL.Contacts.GeneratedM
 D:\Projects\ContactsWebApi\DAL.Contacts\obj\Debug\net7.0\DAL.Contacts.AssemblyInfoInputs.cache
 D:\Projects\ContactsWebApi\DAL.Contacts\obj\Debug\net7.0\DAL.Contacts.AssemblyInfo.cs
 D:\Projects\ContactsWebApi\DAL.Contacts\obj\Debug\net7.0\DAL.Contacts.csproj.CoreCompileInputs.cache
+D:\Projects\ContactsWebApi\DAL.Contacts\obj\Debug\net7.0\DAL.Contacts.sourcelink.json
 D:\Projects\ContactsWebApi\DAL.Contacts\obj\Debug\net7.0\DAL.Contacts.dll
 D:\Projects\ContactsWebApi\DAL.Contacts\obj\Debug\net7.0\refint\DAL.Contacts.dll
 D:\Projects\ContactsWebApi\DAL.Contacts\obj\Debug\net7.0\DAL.Contacts.pdb
 D:\Projects\ContactsWebApi\DAL.Contacts\obj\Debug\net7.0\DAL.Contacts.genruntimeconfig.cache
 D:\Projects\ContactsWebApi\DAL.Contacts\obj\Debug\net7.0\ref\DAL.Contacts.dll
-D:\Projects\ContactsWebApi\DAL.Contacts\obj\Debug\net7.0\DAL.Contacts.sourcelink.json

@@ -22,7 +22,7 @@ namespace ContactsWebApi.Controllers
 
         [HttpGet]
         [Route("~/product/getproducts")]
-        public async Task<DAL_Standard_Response<IEnumerable<productDetailsViewModel>>> GetProducts()
+        public async Task<DAL_Standard_Response<IEnumerable<productDetailsViewModel>>> GetProducts(string? commonsearch)
         {
             DAL_Standard_Response<IEnumerable<productDetailsViewModel>> responseAPI = new DAL_Standard_Response<IEnumerable<productDetailsViewModel>>();
             IEnumerable<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel> errorList = new List<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel>();
@@ -48,7 +48,7 @@ namespace ContactsWebApi.Controllers
             //}
             try
             {
-                IEnumerable<productDetailsViewModel> productDetails =await _IBAL_Products_CRUD.get<productDetailsViewModel>();
+                IQueryable<productDetailsViewModel> productDetails =await _IBAL_Products_CRUD.get<productDetailsViewModel>(commonsearch);
                 var errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 100);
                 responseAPI.code = errorCodeValue.errorCode;
                 responseAPI.message = errorCodeValue.message;
@@ -200,6 +200,11 @@ namespace ContactsWebApi.Controllers
                     responseAPI.message = errorCodeValue.message;
                     return responseAPI;
                 }
+
+                //if(launchDate > lastDateProduct)
+                //{
+
+                //}
                 errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 100);
                 responseAPI.code = errorCodeValue.errorCode;
                 responseAPI.message = errorCodeValue.message;

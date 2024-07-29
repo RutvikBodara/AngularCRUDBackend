@@ -18,21 +18,28 @@ namespace BAL.Contacts.Repository
         {
             _db = db;
         }
-        public async Task<IEnumerable<T>> get<T>()
+        public async Task<IQueryable<T>> get<T>(string? commonsearch)
         {
-            return (IEnumerable<T>)(from x1 in _db.Categories
-                                    join x2 in _db.Products on x1.Id equals x2.Categoryid into temp
-                                    from X2 in temp.DefaultIfEmpty()
-                                    where x1.IsDeleted != true && X2.IsDeleted != true
-                                    group new { x1, X2 } by new { x1.Id, x1.Name,x1.Createddate } into G
-                                    orderby G.Key.Id
-                                    select new categoryDetailViewModel()
-                                    {
-                                        id = G.Key.Id,
-                                        name = G.Key.Name,
-                                        createdDate=G.Key.Createddate,
-                                        TotalProducts=G.Count(G => G.X2 != null)
-                                    });
+            //List<Product> product = _db.Products.ToList();
+            //List<Category> categories = _db.Categories.ToList();
+
+            return (IQueryable<T>)( from x1 in _db.Categories
+                join x2 in _db.Products on x1.Id equals x2.Categoryid into temp
+                from X2 in temp.DefaultIfEmpty()
+                where x1.IsDeleted != true 
+                && (X2 == null || X2.IsDeleted != true)
+                && (commonsearch == null || x1.Id.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower()))
+                || (commonsearch == null || x1.Name.Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower()))
+                || (commonsearch == null || x1.Createddate.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower()))
+                group new { x1, X2 } by new { x1.Id, x1.Name, x1.Createddate } into G
+                orderby G.Key.Id
+                select new categoryDetailViewModel()
+                {
+                    id = G.Key.Id,
+                    name = G.Key.Name,
+                    createdDate = G.Key.Createddate,
+                    TotalProducts = G.Count(g => g.X2 != null)
+                }).AsQueryable();
         }
         public async Task<bool> add(categoryModel requestData)
         {

@@ -12,6 +12,10 @@ D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Microsoft.EntityFrame
 D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Design.dll
 D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Relational.dll
 D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
+D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
+D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
 D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Microsoft.OpenApi.dll
 D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Mono.TextTemplating.dll
 D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Npgsql.dll
@@ -20,6 +24,7 @@ D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Swashbuckle.AspNetCor
 D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\System.CodeDom.dll
+D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
 D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\BAL.Contacts.dll
 D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\DAL.Contacts.dll
 D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\BAL.Contacts.pdb
@@ -31,6 +36,7 @@ D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\ContactsWebApi.Assemb
 D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\ContactsWebApi.csproj.CoreCompileInputs.cache
 D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\ContactsWebApi.MvcApplicationPartsAssemblyInfo.cs
 D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\ContactsWebApi.MvcApplicationPartsAssemblyInfo.cache
+D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\ContactsWebApi.sourcelink.json
 D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\staticwebassets.build.json
 D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\staticwebassets.development.json
 D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\staticwebassets\msbuild.ContactsWebApi.Microsoft.AspNetCore.StaticWebAssets.props
@@ -45,9 +51,3 @@ D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\refint\ContactsWebApi
 D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\ContactsWebApi.pdb
 D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\ContactsWebApi.genruntimeconfig.cache
 D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\ref\ContactsWebApi.dll
-D:\Projects\ContactsWebApi\ContactsWebApi\obj\Debug\net7.0\ContactsWebApi.sourcelink.json
-D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Microsoft.IdentityModel.Abstractions.dll
-D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Microsoft.IdentityModel.JsonWebTokens.dll
-D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
-D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
-D:\Projects\ContactsWebApi\ContactsWebApi\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll

@@ -8,8 +8,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BAL.Contacts.Repository
@@ -22,34 +24,46 @@ namespace BAL.Contacts.Repository
         {
             _db = db;
         }
-        public async Task<IEnumerable<T>> get<T>()
+        public async Task<IQueryable<T>> get<T>(string? commonsearch)
         {
-            return (IEnumerable<T>)(from x1 in _db.Products
-                                    join x2 in _db.Categories on x1.Categoryid equals x2.Id
-                                    where x1.IsDeleted != true
-                                    select new productDetailsViewModel()
-                                    {
-                                        id = x1.Id,
-                                        name = x1.Name,
-                                        categoryName = x2.Name,
-                                        categoryId = x2.Id,
-                                        createddate = x1.Createddate,
-                                        description = x1.Description,
-                                        updatedDate = x1.Updatedby,
-                                        helplineNumber = x1.HelplineNumber.ToString() ?? "",
-                                        rating = x1.Rating,
-                                        image = x1.ProductImage,
-                                        imageName = x1.Image,
-                                        launchDate = x1.LaunchDate.ToString(),
-                                        lastDate=x1.LastDate.ToString(),
-                                        price = x1.Price,
-                                        countryServed=(x1.CountryServed == null) ? null : x1.CountryServed,
-                                        availableForSale = x1.Availableforsale
-                                    }
-                                    );
+
+            //List<Product> product = _db.Products.ToList();
+            //List<Category> categories = _db.Categories.ToList();
+
+            return (IQueryable<T>)(from x1 in _db.Products
+                                   join x2 in _db.Categories on x1.Categoryid equals x2.Id
+                                   where x1.IsDeleted != true
+                                   && (commonsearch == null || x1.Id.ToString().Replace(" ", string.Empty).Trim().ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower()))
+                                   || (commonsearch == null || x1.Name.Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower()))
+                                   || (commonsearch == null || x2.Name.Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower()))
+                                   || (commonsearch == null || x1.Createddate.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower()))
+                                   || (commonsearch == null || (x1.Updatedby == null || (x1.Updatedby != null && x1.Updatedby.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower()))))
+                                   || (commonsearch == null || x1.Description.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower()))
+                                   || (commonsearch == null || x1.HelplineNumber == null || x1.HelplineNumber.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower()))
+                                   select new productDetailsViewModel
+                                   {
+                                       id = x1.Id,
+                                       name = x1.Name,
+                                       categoryName = x2.Name,
+                                       categoryId = x2.Id,
+                                       createddate = x1.Createddate,
+                                       description = x1.Description,
+                                       updatedDate = x1.Updatedby,
+                                       helplineNumber = x1.HelplineNumber.ToString() ?? "",
+                                       rating = x1.Rating,
+                                       image = x1.ProductImage,
+                                       imageName = x1.Image,
+                                       launchDate = x1.LaunchDate.ToString(),
+                                       lastDate = x1.LastDate.ToString(),
+                                       price = x1.Price,
+                                       countryServed = x1.CountryServed,
+                                       availableForSale = x1.Availableforsale
+                                   }).AsQueryable();
+
         }
-        public async Task<bool> add(string name, string description, string helplineNumber, string launchDate,string lastDateProduct, string categoryId, IFormFile file, string availableForSale, List<int> Countries,double price)
+        public async Task<bool> add(string name, string description, string helplineNumber, string launchDate, string lastDateProduct, string categoryId, IFormFile file, string availableForSale, List<int> Countries, double price)
         {
+
             bool checkDublicate = _db.Products.Any(x => x.Name.ToLower() == name.ToLower() && x.IsDeleted != true);
             DateOnly dateOnly;
             if (!checkDublicate)
@@ -78,8 +92,6 @@ namespace BAL.Contacts.Repository
                 }
                 else
                 {
-
-                   
                     short[] array = new short[Countries.Count()];
                     foreach (var x in Countries)
                     {
@@ -148,8 +160,8 @@ namespace BAL.Contacts.Repository
                         details.Updatedby = DateTime.Now;
                         details.Description = product.description;
                         details.Categoryid = product.categoryId;
-                        if(product.file != null)
-                        details.ProductImage = product.file;
+                        if (product.file != null)
+                            details.ProductImage = product.file;
                         details.Availableforsale = product.availableForSale;
                         details.Price = product.price;
 

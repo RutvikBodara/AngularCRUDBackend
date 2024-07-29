@@ -21,7 +21,7 @@ namespace ContactsWebApi.Controllers
 
         [HttpGet]
         [Route("~/category/getcategory")]
-        public async Task<DAL_Standard_Response<IEnumerable<categoryDetailViewModel>>> GetCategory()
+        public async Task<DAL_Standard_Response<IEnumerable<categoryDetailViewModel>>> GetCategory(string? commonsearch)
         {
             DAL_Standard_Response<IEnumerable<categoryDetailViewModel>> responseAPI = new DAL_Standard_Response<IEnumerable<categoryDetailViewModel>>();
             IEnumerable<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel> errorList = new List<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel>();
@@ -48,7 +48,7 @@ namespace ContactsWebApi.Controllers
             try
             {
 
-                IEnumerable<categoryDetailViewModel> CategoryDetails = await _IBAL_Category_CRUD.get<categoryDetailViewModel>();
+                IQueryable<categoryDetailViewModel> CategoryDetails = await _IBAL_Category_CRUD.get<categoryDetailViewModel>(commonsearch);
                 var errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 100);
                 responseAPI.code = errorCodeValue.errorCode;
                 responseAPI.message = errorCodeValue.message;

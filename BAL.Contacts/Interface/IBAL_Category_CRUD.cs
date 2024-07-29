@@ -11,7 +11,7 @@ namespace BAL.Contacts.Interface
 {
     public interface IBAL_Category_CRUD
     {
-        Task<IEnumerable<T>> get<T>();
+        Task<IQueryable<T>> get<T>(string? commonsearch);
         Task<bool> add(categoryModel requestData);
         Task<bool> update<T>(categoryDetailViewModel contacts);
         Task<bool> delete<T>(int id);

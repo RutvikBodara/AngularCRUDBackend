@@ -13,7 +13,7 @@ namespace BAL.Contacts.Interface
 {
     public interface IBAL_Products_CRUD
     {
-        Task<IEnumerable<T>> get<T>();
+        Task<IQueryable<T>> get<T>(string? commonsearch);
         Task<bool> add(string name, string description, string helplineNumber, string launchDate,string lastDateProduct, string categoryId, IFormFile file,string availableForSale,List<int> Countries, double price);
         Task<bool> update<T>(editProductViewModel contacts);
         Task<bool> delete<T>(int id);

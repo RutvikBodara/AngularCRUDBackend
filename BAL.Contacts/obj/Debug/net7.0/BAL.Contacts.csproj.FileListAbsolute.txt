@@ -9,10 +9,10 @@ D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.GeneratedM
 D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.AssemblyInfoInputs.cache
 D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.AssemblyInfo.cs
 D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.csproj.CoreCompileInputs.cache
+D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.sourcelink.json
 D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.csproj.CopyComplete
 D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.dll
 D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\refint\BAL.Contacts.dll
 D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.pdb
 D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.genruntimeconfig.cache
 D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\ref\BAL.Contacts.dll
-D:\Projects\ContactsWebApi\BAL.Contacts\obj\Debug\net7.0\BAL.Contacts.sourcelink.json
