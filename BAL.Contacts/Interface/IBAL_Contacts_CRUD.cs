@@ -12,7 +12,7 @@ namespace BAL.Contacts.Interface
 {
     public interface IBAL_Contacts_CRUD
     {
-        Task<IEnumerable<T>> get<T>(string? name,string? surname , int? id, string? typeList);
+        Task<patentContactsDetailsViewModel> get<T>(string? name,string? surname , int? id, string? typeList, int? pagenumber, int? pagesize, string? sortedcolumn, string? sorteddirection);
         //Task<T> add<T>(DAL.Contacts.ViewModels.Contacts.contactsDetailViewModel<T> requestData);
         Task<bool> add(contactsDetailViewModel<string> requestData);
         Task<bool> update<T>(Contact contacts);

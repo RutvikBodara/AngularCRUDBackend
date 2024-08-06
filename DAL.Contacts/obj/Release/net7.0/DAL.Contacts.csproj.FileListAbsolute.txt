@@ -1,0 +1,15 @@
+D:\Projects\ContactsWebApi\DAL.Contacts\bin\Release\net7.0\DAL.Contacts.deps.json
+D:\Projects\ContactsWebApi\DAL.Contacts\bin\Release\net7.0\DAL.Contacts.runtimeconfig.json
+D:\Projects\ContactsWebApi\DAL.Contacts\bin\Release\net7.0\DAL.Contacts.dll
+D:\Projects\ContactsWebApi\DAL.Contacts\bin\Release\net7.0\DAL.Contacts.pdb
+D:\Projects\ContactsWebApi\DAL.Contacts\obj\Release\net7.0\DAL.Contacts.csproj.AssemblyReference.cache
+D:\Projects\ContactsWebApi\DAL.Contacts\obj\Release\net7.0\DAL.Contacts.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\ContactsWebApi\DAL.Contacts\obj\Release\net7.0\DAL.Contacts.AssemblyInfoInputs.cache
+D:\Projects\ContactsWebApi\DAL.Contacts\obj\Release\net7.0\DAL.Contacts.AssemblyInfo.cs
+D:\Projects\ContactsWebApi\DAL.Contacts\obj\Release\net7.0\DAL.Contacts.csproj.CoreCompileInputs.cache
+D:\Projects\ContactsWebApi\DAL.Contacts\obj\Release\net7.0\DAL.Contacts.sourcelink.json
+D:\Projects\ContactsWebApi\DAL.Contacts\obj\Release\net7.0\DAL.Contacts.dll
+D:\Projects\ContactsWebApi\DAL.Contacts\obj\Release\net7.0\refint\DAL.Contacts.dll
+D:\Projects\ContactsWebApi\DAL.Contacts\obj\Release\net7.0\DAL.Contacts.pdb
+D:\Projects\ContactsWebApi\DAL.Contacts\obj\Release\net7.0\DAL.Contacts.genruntimeconfig.cache
+D:\Projects\ContactsWebApi\DAL.Contacts\obj\Release\net7.0\ref\DAL.Contacts.dll

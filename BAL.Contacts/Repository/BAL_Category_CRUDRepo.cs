@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BAL.Contacts.Repository
 {
-    public class BAL_Category_CRUDRepo : IBAL_Category_CRUD 
+    public class BAL_Category_CRUDRepo : IBAL_Category_CRUD
     {
         private readonly DAL.Contacts.Data.ConactsDBContext _db;
 
@@ -23,23 +23,25 @@ namespace BAL.Contacts.Repository
             //List<Product> product = _db.Products.ToList();
             //List<Category> categories = _db.Categories.ToList();
 
-            return (IQueryable<T>)( from x1 in _db.Categories
-                join x2 in _db.Products on x1.Id equals x2.Categoryid into temp
-                from X2 in temp.DefaultIfEmpty()
-                where x1.IsDeleted != true 
-                && (X2 == null || X2.IsDeleted != true)
-                && (commonsearch == null || x1.Id.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower()))
-                || (commonsearch == null || x1.Name.Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower()))
-                || (commonsearch == null || x1.Createddate.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower()))
-                group new { x1, X2 } by new { x1.Id, x1.Name, x1.Createddate } into G
-                orderby G.Key.Id
-                select new categoryDetailViewModel()
-                {
-                    id = G.Key.Id,
-                    name = G.Key.Name,
-                    createdDate = G.Key.Createddate,
-                    TotalProducts = G.Count(g => g.X2 != null)
-                }).AsQueryable();
+            return (IQueryable<T>)(from x1 in _db.Categories
+                                   join x2 in _db.Products on x1.Id equals x2.Categoryid into temp
+                                   from X2 in temp.DefaultIfEmpty()
+                                   where x1.IsDeleted != true
+                                   && (X2 == null || X2.IsDeleted != true)
+                                   && (commonsearch == null
+                                       || x1.Id.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())
+                                       || x1.Name.Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())
+                                       || x1.Createddate.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower()))
+                                   group new { x1, X2 } by new { x1.Id, x1.Name, x1.Createddate } into G
+                                   orderby G.Key.Id
+                                   select new categoryDetailViewModel()
+                                   {
+                                       id = G.Key.Id,
+                                       name = G.Key.Name,
+                                       createdDate = G.Key.Createddate,
+                                       TotalProducts = G.Count(g => g.X2 != null)
+                                   }).AsQueryable();
+
         }
         public async Task<bool> add(categoryModel requestData)
         {
@@ -60,14 +62,14 @@ namespace BAL.Contacts.Repository
             if (await exists<Category>(category.id))
             {
                 Category? details = await _db.Categories.FirstOrDefaultAsync(x => x.Id == category.id);
-               bool checkDublicate = _db.Contacts.Any(x => x.Name.ToLower() == category.name.ToLower() && x.Id != category.id && x.Isdeleted != true);
+                bool checkDublicate = _db.Contacts.Any(x => x.Name.ToLower() == category.name.ToLower() && x.Id != category.id && x.Isdeleted != true);
                 if (details != null && !checkDublicate)
                 {
-                        details.Name = category.name;
-                        details.Updatedby=DateTime.Now;
-                        _db.Categories.Update(details);
-                        _db.SaveChanges();
-                        return true;
+                    details.Name = category.name;
+                    details.Updatedby = DateTime.Now;
+                    _db.Categories.Update(details);
+                    _db.SaveChanges();
+                    return true;
                 }
                 return false;
             }

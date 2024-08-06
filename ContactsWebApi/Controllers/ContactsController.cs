@@ -1,6 +1,7 @@
 using BAL.Contacts.Repository;
 using DAL.Contacts.DataModels;
 using DAL.Contacts.ViewModels.API.Output;
+using DAL.Contacts.ViewModels.Contacts;
 using DAL.Contacts.ViewModels.ContactType;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components.Web;
@@ -28,8 +29,8 @@ namespace ContactsWebApi.Controllers
         }
 
         [HttpGet]
-        [Route("~/contacts/GetContacts")]
-        public async Task<DAL_Standard_Response<IEnumerable<Contact>>> GetContacts(string? name = null, string? surname = null, int? id = null, string? typeList = null)
+        [Route("~/contacts/getcontacts")]
+        public async Task<DAL_Standard_Response<IEnumerable<Contact>>> GetContacts(int? pagenumber, int? pagesize, string? sortedcolumn, string? sorteddirection, string? name = null, string? surname = null, int? id = null, string? typeList = null)
         {
             DAL_Standard_Response<IEnumerable<Contact>> responseAPI = new DAL_Standard_Response<IEnumerable<Contact>>();
             IEnumerable<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel> errorList = new List<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel>();
@@ -55,12 +56,15 @@ namespace ContactsWebApi.Controllers
             }
             try
             {
-                IEnumerable<Contact> contacts = await _IBAL_Contacts_CRUD.get<Contact>(name, surname, id, typeList);
-
+                patentContactsDetailsViewModel contacts = await _IBAL_Contacts_CRUD.get<Contact>(name, surname, id, typeList,pagenumber,pagesize,sortedcolumn,sorteddirection);
                 var errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 100);
                 responseAPI.code = errorCodeValue.errorCode;
                 responseAPI.message = errorCodeValue.message;
-                responseAPI.responseData = contacts;
+                responseAPI.responseData = contacts.contactDetails;
+                responseAPI.pageNumber = contacts.pageNumber;
+                responseAPI.dataCount = contacts.dataCount;
+                responseAPI.pageSize = contacts.pageSize;
+                responseAPI.maxPage = contacts.maxPage;
                 return responseAPI;
             }
             catch (Exception ex)

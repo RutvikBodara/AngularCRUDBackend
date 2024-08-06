@@ -1,5 +1,7 @@
 ﻿using BAL.Contacts.Interface;
 using DAL.Contacts.DataModels;
+using DAL.Contacts.ViewModels.Contacts;
+using DAL.Contacts.ViewModels.Product;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using System;
@@ -19,7 +21,7 @@ namespace BAL.Contacts.Repository
         {
             _db = db;
         }
-        public async Task<IEnumerable<T>> get<T>(string? name, string? surname, int? id, string? typeList)
+        public async Task<patentContactsDetailsViewModel> get<T>(string? name, string? surname, int? id, string? typeList, int? pagenumber, int? pagesize, string? sortedcolumn, string? sorteddirection)
         {
 
             List<int> searchTypeList = new List<int>();
@@ -30,10 +32,10 @@ namespace BAL.Contacts.Repository
 
             var contactList = _db.Contacts.ToList();
 
-            IEnumerable<T> fetchContacts = (IEnumerable<T>)(from x1 in contactList
+            var query = (IEnumerable<Contact>)(from x1 in contactList
                                                             where
                                                             (name == null || x1.Name.ToLower().Contains(name.ToLower()))
-                                                            && (surname == null || x1.Surname.ToLower().Contains(surname.ToLower()))
+                                                            || (name == null || x1.Surname.ToLower().Contains(name.ToLower()))
                                                             && (id == null || id == x1.Id)
                                                             && (typeList == null || searchTypeList.Any(x => x == x1.ContactTypeId))
                                                             && x1.Isdeleted != true
@@ -44,8 +46,45 @@ namespace BAL.Contacts.Repository
                                                                 Surname = x1.Surname,
                                                                 Id = x1.Id
                                                             });
-            return fetchContacts;
 
+            patentContactsDetailsViewModel model = new patentContactsDetailsViewModel();
+            model.maxPage = ((query.Count() % pagesize == 0) ? query.Count() % pagesize : (query.Count() % pagesize) + 1);
+            model.dataCount = query.Count();
+            // Apply sorting
+
+            if (sortedcolumn == "name")
+            {
+                query = sorteddirection == "desc"
+                    ? query.OrderByDescending(x => x.Name)
+                    : query.OrderBy(x => x.Name);
+            }
+            else if (sortedcolumn == "id")
+            {
+                query = sorteddirection == "desc"
+                    ? query.OrderByDescending(x => x.Id)
+                    : query.OrderBy(x => x.Id);
+            }
+            else if (sortedcolumn == "surname")
+            {
+                query = sorteddirection == "desc"
+                    ? query.OrderByDescending(x => x.Surname)
+                    : query.OrderBy(x => x.Surname);
+            }
+            
+            // Apply pagination if necessary
+            if (pagenumber.HasValue && pagesize.HasValue)
+            {
+                query = query.Skip((pagenumber.Value - 1) * pagesize.Value).Take(pagesize.Value);
+            }
+            else
+            {
+                query = query.Take(5);
+            }
+
+            model.contactDetails = query;
+            model.pageNumber = pagenumber;
+            model.pageSize = pagesize;
+            return model;
         }
         public async Task<bool> add(DAL.Contacts.ViewModels.Contacts.contactsDetailViewModel<string> requestData)
         {
