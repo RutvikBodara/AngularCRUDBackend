@@ -1,4 +1,5 @@
 using BAL.Contacts.Repository;
+using ContactsWebApi.Controllers.Auth;
 using DAL.Contacts.DataModels;
 using DAL.Contacts.ViewModels.API.Output;
 using DAL.Contacts.ViewModels.Contacts;
@@ -13,6 +14,7 @@ namespace ContactsWebApi.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [CustomAuth()]
     //[ContactsWebApi.Controllers.Auth.CustomAuth(1)]
     public class ContactsController : ControllerBase
     {

@@ -11,7 +11,7 @@ using System.Security.Principal;
 
 namespace BAL.Contacts.Repository
 {
-    public class CommonMethodsRepo:ICommonMethods
+    public class CommonMethodsRepo : ICommonMethods
     {
         private readonly DAL.Contacts.Data.ConactsDBContext _db;
 
@@ -21,27 +21,50 @@ namespace BAL.Contacts.Repository
         }
         public async Task<IEnumerable<T>> AddErrorCode<T>(string segment)
         {
-            IEnumerable<T> result = (IEnumerable<T>) (from x1 in _db.ErrorCodes
-                                    where x1.Segment == segment
-                                    select new DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel()
-                                    {
-                                        errorCode=x1.ErrorCode1,
-                                        message=x1.ErrorDescription
-                                    });
+            IEnumerable<T> result = (IEnumerable<T>)(from x1 in _db.ErrorCodes
+                                                     where x1.Segment == segment
+                                                     select new DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel()
+                                                     {
+                                                         errorCode = x1.ErrorCode1,
+                                                         message = x1.ErrorDescription
+                                                     });
             return result;
         }
         public async Task<bool> VerifyCredentials(AccountDetailsViewModel data)
         {
-            return true;
+            return _db.Accounts.Any(x => x.Username.ToLower() == data.UserName.ToLower() && x.Password == data.Password);
+
         }
         public async Task<Account?> GetAccountDetails(string username)
         {
-            Account? account =await _db.Accounts.FirstOrDefaultAsync(x => x.Username.ToLower() == username.ToLower());
+            Account? account = await _db.Accounts.FirstOrDefaultAsync(x => x.Username.ToLower() == username.ToLower());
             return account;
         }
         public async Task<IEnumerable<Country>> GetCountryList()
         {
             return _db.Countries.ToList();
+        }
+        public async Task<bool> register(RegisterDetailsViewModel data)
+        {
+            bool checkDublicate = await _db.Accounts.AnyAsync(x => x.Username.ToLower() == data.UserName.ToLower());
+            if (!checkDublicate)
+            {
+                Account account = new();
+                account.Username = data.UserName;
+                account.Password = data.Password;
+                account.Createddate = DateTime.Now;
+                account.Emailid = data.Email;
+                account.Firstname =data.FirstName; 
+                account.Lastname =data.LastName;
+                account.Accounttype = 1;
+                _db.Accounts.Add(account);
+                _db.SaveChanges();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         //public async Task<bool> columnExist<T>(string tableName, string columnName)
         //{

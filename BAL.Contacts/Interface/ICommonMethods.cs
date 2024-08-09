@@ -18,6 +18,7 @@ namespace BAL.Contacts.Interface
 
         Task<IEnumerable<Country>> GetCountryList();
 
+        Task<bool> register(RegisterDetailsViewModel data);
         //Task<bool> dublicateCheck(string tableName, string columnName, string value);
     }
 }

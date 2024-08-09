@@ -34,11 +34,12 @@ namespace BAL.Contacts.Repository
 
             var query = (IEnumerable<Contact>)(from x1 in contactList
                                                             where
-                                                            (name == null || x1.Name.ToLower().Contains(name.ToLower()))
-                                                            || (name == null || x1.Surname.ToLower().Contains(name.ToLower()))
+                                                             x1.Isdeleted != true
+                                                            &&
+                                                            ((name == null || x1.Name.ToLower().Contains(name.ToLower()))
+                                                            || (name == null || x1.Surname.ToLower().Contains(name.ToLower())))
                                                             && (id == null || id == x1.Id)
                                                             && (typeList == null || searchTypeList.Any(x => x == x1.ContactTypeId))
-                                                            && x1.Isdeleted != true
                                                             orderby x1.Id
                                                             select new Contact()
                                                             {

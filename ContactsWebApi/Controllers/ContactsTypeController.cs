@@ -1,4 +1,5 @@
 ﻿using BAL.Contacts.Interface;
+using ContactsWebApi.Controllers.Auth;
 using DAL.Contacts.DataModels;
 using DAL.Contacts.ViewModels.API.Output;
 using DAL.Contacts.ViewModels.ContactType;
@@ -8,6 +9,7 @@ namespace ContactsWebApi.Controllers
 {
     [Route("/contacts/[controller]")]
     [ApiController]
+    [CustomAuth()]
     public class ContactsTypeController : Controller
     {
         private readonly BAL.Contacts.Interface.IBAL_Contacts_CRUD _IBAL_Contacts_CRUD;

@@ -33,4 +33,10 @@ public partial class Account
 
     [Column("accounttype")]
     public int Accounttype { get; set; }
+
+    [Column("firstname", TypeName = "character varying")]
+    public string Firstname { get; set; } = null!;
+
+    [Column("lastname", TypeName = "character varying")]
+    public string Lastname { get; set; } = null!;
 }

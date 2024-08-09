@@ -1,4 +1,5 @@
 ﻿using BAL.Contacts.Interface;
+using ContactsWebApi.Controllers.Auth;
 using DAL.Contacts.DataModels;
 using DAL.Contacts.ViewModels.API.Output;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ContactsWebApi.Controllers
 {
     [ApiController]
+    [CustomAuth()]
     public class CommonController : Controller
     {
         private readonly BAL.Contacts.Interface.ICommonMethods _ICommonMethods;

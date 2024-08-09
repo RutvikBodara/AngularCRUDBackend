@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ContactsWebApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+13342aaa049711fc81dc0b809ac1ec658404c256")]
 [assembly: System.Reflection.AssemblyProductAttribute("ContactsWebApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ContactsWebApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -9,11 +9,12 @@ namespace ContactsWebApi.Controllers.Auth
     [AttributeUsage(AttributeTargets.All)]
     public class CustomAuth : ActionFilterAttribute, IAuthorizationFilter
     {
-        private readonly int _role;
-        public CustomAuth(int role)
-        {
-            _role = role;
-        }
+        //private readonly int _role;
+        //private readonly int _role;
+        //public CustomAuth(int role)
+        //{
+        //    _role = role;
+        //}
         //public override void OnResultExecuting(ResultExecutingContext filterContext)
         //{
         //    filterContext.HttpContext.Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
@@ -26,29 +27,36 @@ namespace ContactsWebApi.Controllers.Auth
             var jwtservice = filterContext.HttpContext.RequestServices.GetService<IBAL_Jwt_Auth_Interface>();
             if (jwtservice == null)
             {
-                filterContext.Result = new RedirectResult("~/Home/Login");
+                filterContext.Result = new UnauthorizedResult();
                 return;
             }
-
+            // Access the HttpContext from the filter context
             var request = filterContext.HttpContext.Request;
-            var token = request.Cookies["Jwt"];
 
-            if (token == null || !jwtservice.ValidateToken(token, out JwtSecurityToken jwtSecurityTokenHandler))
-            {
-                filterContext.Result = new RedirectResult("~/Login/");
-                return;
-            }
-            var roles = jwtSecurityTokenHandler.Claims.FirstOrDefault(claiim => claiim.Type == ClaimTypes.Role);
+            // Retrieve the JWT token from the cookies
 
-            if (roles == null)
+            var httpContext = filterContext.HttpContext;
+            var token = httpContext.Request.Cookies["JwtToken"];
+            foreach (var cookie in filterContext.HttpContext.Request.Cookies)
             {
-                filterContext.Result = new RedirectResult("~/Home/Login");
-                return;
+                Console.WriteLine($"Cookie: {cookie.Key} = {cookie.Value}");
             }
-            if (_role != 0 && int.Parse(roles.Value) != _role)
+            var tokenFrontEnd = httpContext.Request.Headers["jwt"].FirstOrDefault();
+
+            if (string.IsNullOrEmpty(tokenFrontEnd) ||!ValidateToken(token, tokenFrontEnd))
             {
-                filterContext.Result = new RedirectResult("~/Home/AccessDenied");
+                filterContext.Result = new UnauthorizedResult();
+                return;
             }
         }
+        private bool ValidateToken(string? token1,string? token2)
+        {
+            if(token1 == token2)
+            {
+                return true;
+            }
+           return   true;
+        }
+
     }
 }

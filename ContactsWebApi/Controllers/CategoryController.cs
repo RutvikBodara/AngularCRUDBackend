@@ -1,4 +1,5 @@
 ﻿using BAL.Contacts.Interface;
+using ContactsWebApi.Controllers.Auth;
 using DAL.Contacts.DataModels;
 using DAL.Contacts.ViewModels.API.Output;
 using DAL.Contacts.ViewModels.Product;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ContactsWebApi.Controllers
 {
     [ApiController]
+    [CustomAuth()]
     public class CategoryController : Controller
     {
         private readonly BAL.Contacts.Interface.ICommonMethods _ICommonMethods;
@@ -64,6 +66,7 @@ namespace ContactsWebApi.Controllers
                 return responseAPI;
             }
         }
+
         [HttpPost]
         [Route("~/category/addcategory")]
         public async Task<DAL_ResponseWithOutBody> AddCategory(categoryModel requestData)

@@ -26,7 +26,7 @@ namespace BAL.Contacts.Repository
         {
             var claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Email, UserData.Email),
+                new Claim(ClaimTypes.Email, UserData.Email??string.Empty),
                 //new Claim(ClaimTypes.Role, UserData.Role.ToString()),
                 new Claim("UserName", UserData.Username.ToString()),
                 new Claim("AccountId", UserData.AccountId.ToString()),

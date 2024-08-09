@@ -1,4 +1,5 @@
 ﻿using BAL.Contacts.Interface;
+using ContactsWebApi.Controllers.Auth;
 using DAL.Contacts.DataModels;
 using DAL.Contacts.ViewModels.API.Output;
 using DAL.Contacts.ViewModels.Product;
@@ -7,6 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace ContactsWebApi.Controllers
 {
     [ApiController]
+
+    [CustomAuth()]
     public class ProductsController : Controller
     {
         
@@ -20,6 +23,7 @@ namespace ContactsWebApi.Controllers
             _IBAL_Products_CRUD = bAL_Products_CRUD;
         }
 
+       
         [HttpGet]
         [Route("~/product/getproducts")]
         public async Task<DAL_Standard_Response<IEnumerable<productDetailsViewModel>>> GetProducts(string? commonsearch, int? pagenumber, int? pagesize,string? sortedcolumn,string? sorteddirection )
