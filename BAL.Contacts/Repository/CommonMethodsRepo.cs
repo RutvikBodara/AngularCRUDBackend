@@ -37,7 +37,31 @@ namespace BAL.Contacts.Repository
         }
         public async Task<Account?> GetAccountDetails(string username)
         {
-            Account? account = await _db.Accounts.FirstOrDefaultAsync(x => x.Username.ToLower() == username.ToLower());
+            Account? account = await _db.Accounts.FirstOrDefaultAsync(x => x.Username.ToLower() == username.ToLower() && x.Isdeleted != true);
+            return account;
+        }
+        public async Task<bool> updateProfile(UpdateProfileViewModel data)
+        {
+            Account? accountDetails =await _db.Accounts.FirstOrDefaultAsync(x => x.Id == data.Id && x.Isdeleted != true);
+
+            if(accountDetails != null)
+            {
+                if(accountDetails.Username != data.UserName)
+                {
+                    return false;
+                }
+                accountDetails.Firstname = data.FirstName;
+                accountDetails.Lastname = data.LastName;
+                accountDetails.Emailid = data.Email;
+                _db.Accounts.Update(accountDetails);
+                _db.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+        public async Task<Account?> GetAccountDetailsById(int id)
+        {
+            Account? account = await _db.Accounts.FirstOrDefaultAsync(x => x.Id == id);
             return account;
         }
         public async Task<IEnumerable<Country>> GetCountryList()

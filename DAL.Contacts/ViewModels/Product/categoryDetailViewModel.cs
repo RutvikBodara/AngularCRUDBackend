@@ -12,5 +12,9 @@ namespace DAL.Contacts.ViewModels.Product
         public string name { get; set; }
         public  DateTime? createdDate { get; set; } = null;
         public int? TotalProducts { get; set; } = null;
+
     }
 }
+
+//editable row
+//edit btn

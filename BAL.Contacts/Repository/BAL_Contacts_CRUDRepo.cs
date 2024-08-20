@@ -1,5 +1,6 @@
 ﻿using BAL.Contacts.Interface;
 using DAL.Contacts.DataModels;
+using DAL.Contacts.ViewModels.API.Output;
 using DAL.Contacts.ViewModels.Contacts;
 using DAL.Contacts.ViewModels.Product;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -82,9 +84,49 @@ namespace BAL.Contacts.Repository
                 query = query.Take(5);
             }
 
+            List<DAL_Column_BehaviourViewModel> columnFields = new List<DAL_Column_BehaviourViewModel>();
+
+            var firstItem = query.FirstOrDefault();
+            if (firstItem != null)
+            {
+                PropertyInfo[] properties = firstItem.GetType().GetProperties();
+                foreach (PropertyInfo property in properties)
+                {
+                    DAL_Column_BehaviourViewModel subColumn = new DAL_Column_BehaviourViewModel();
+                    subColumn.columnName = property.Name;
+                    Console.WriteLine(property.Name);
+                    if (property.Name == "Id")
+                    {
+                        subColumn.columnName = "id";
+                        subColumn.isEditable = false;
+                    }
+                    else if (property.Name == "Name")
+                    {
+                        subColumn.columnName = "name";
+                        subColumn.isEditable = true;
+                    }
+                    else if (property.Name == "Surname")
+                    {
+                        subColumn.columnName = "surname";
+                        subColumn.isEditable = false;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                    columnFields.Add(subColumn);
+                }
+            }
+            DAL_Column_BehaviourViewModel subColumnAction = new DAL_Column_BehaviourViewModel();
+            subColumnAction.columnName = "action";
+            subColumnAction.isEditable = false;
+            columnFields.Add(subColumnAction);
+
+
             model.contactDetails = query;
             model.pageNumber = pagenumber;
             model.pageSize = pagesize;
+            model.columnCredits = columnFields;
             return model;
         }
         public async Task<bool> add(DAL.Contacts.ViewModels.Contacts.contactsDetailViewModel<string> requestData)

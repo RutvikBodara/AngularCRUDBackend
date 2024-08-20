@@ -9,6 +9,7 @@
         public int? pageSize { get; set; } 
         public int? dataCount { get; set; }
         public int? maxPage { get; set; }
+        public List<DAL_Column_BehaviourViewModel>? columnCredits { get; set; }
         public T responseData{ get; set; }
     }
 }

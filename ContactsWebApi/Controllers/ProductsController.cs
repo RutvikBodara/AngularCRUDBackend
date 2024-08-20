@@ -4,6 +4,7 @@ using DAL.Contacts.DataModels;
 using DAL.Contacts.ViewModels.API.Output;
 using DAL.Contacts.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 
 namespace ContactsWebApi.Controllers
 {
@@ -23,7 +24,6 @@ namespace ContactsWebApi.Controllers
             _IBAL_Products_CRUD = bAL_Products_CRUD;
         }
 
-       
         [HttpGet]
         [Route("~/product/getproducts")]
         public async Task<DAL_Standard_Response<IEnumerable<productDetailsViewModel>>> GetProducts(string? commonsearch, int? pagenumber, int? pagesize,string? sortedcolumn,string? sorteddirection )
@@ -52,9 +52,7 @@ namespace ContactsWebApi.Controllers
             //}
             try
             {
-
                 patentProductDetailsViewModel productDetails =await _IBAL_Products_CRUD.get<productDetailsViewModel>(commonsearch, pagenumber, pagesize, sortedcolumn, sorteddirection);
-
 
                 var errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 100);
                 responseAPI.code = errorCodeValue.errorCode;
@@ -63,6 +61,7 @@ namespace ContactsWebApi.Controllers
                 responseAPI.dataCount = productDetails.dataCount;
                 responseAPI.pageSize=productDetails.pageSize;
                 responseAPI.maxPage =productDetails.maxPage;
+                responseAPI.columnCredits=productDetails.columnCredits;
                 responseAPI.responseData =productDetails.ProductDetails;
                 return responseAPI;
             }
@@ -290,6 +289,54 @@ namespace ContactsWebApi.Controllers
                 return responseAPI;
             }
         }
+
+
+        [HttpGet]
+        [Route("~/product/getproductbycategory")]
+        public async Task<DAL_Standard_Response<IQueryable<productDetailsViewModel>>> GetProductsByCategory(int id)
+        {
+            DAL_Standard_Response<IQueryable<productDetailsViewModel>> responseAPI = new DAL_Standard_Response<IQueryable<productDetailsViewModel>>();
+            IEnumerable<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel> errorList = new List<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel>();
+            try
+            {
+                errorList = await _ICommonMethods.AddErrorCode<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel>("Contact_CRUD");
+            }
+            catch (Exception ex)
+            {
+                responseAPI.code = 110;
+                responseAPI.message = "Error in ErrorCode Fetch";
+                //responseAPI.responseData = null;
+                return responseAPI;
+            }
+
+            //var apiKey = HttpContext.Request.Headers["API-KEY"].FirstOrDefault();
+            //if (apiKey != _Configuration["APIKey"])
+            //{
+            //    var errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 106);
+            //    responseAPI.code = errorCodeValue.errorCode;
+            //    responseAPI.message = errorCodeValue.message;
+            //    return responseAPI;
+            //}
+            try
+            {
+                patentProductDetailsViewModel productDetails = await _IBAL_Products_CRUD.getById(id);
+                var errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 100);
+                responseAPI.code = errorCodeValue.errorCode;
+                responseAPI.message = errorCodeValue.message;           
+                responseAPI.responseData = productDetails.ProductDetails;
+                responseAPI.columnCredits = productDetails.columnCredits;
+                return responseAPI;
+            }
+            catch (Exception ex)
+            {
+                var errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 101);
+                responseAPI.code = errorCodeValue.errorCode;
+                responseAPI.message = errorCodeValue.message;
+                responseAPI.responseData = null;
+                return responseAPI;
+            }
+        }
+
 
     }
 }

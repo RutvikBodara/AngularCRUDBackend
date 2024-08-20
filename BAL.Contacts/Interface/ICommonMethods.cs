@@ -15,6 +15,8 @@ namespace BAL.Contacts.Interface
 
         Task<bool> VerifyCredentials(AccountDetailsViewModel data);
         Task<Account?> GetAccountDetails(string username);
+        Task<Account?> GetAccountDetailsById(int id);
+        Task<bool> updateProfile(UpdateProfileViewModel data);
 
         Task<IEnumerable<Country>> GetCountryList();
 

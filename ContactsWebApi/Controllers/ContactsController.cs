@@ -67,6 +67,7 @@ namespace ContactsWebApi.Controllers
                 responseAPI.dataCount = contacts.dataCount;
                 responseAPI.pageSize = contacts.pageSize;
                 responseAPI.maxPage = contacts.maxPage;
+                responseAPI.columnCredits = contacts.columnCredits;
                 return responseAPI;
             }
             catch (Exception ex)

@@ -1,4 +1,5 @@
 ﻿using DAL.Contacts.DataModels;
+using DAL.Contacts.ViewModels.API.Output;
 using DAL.Contacts.ViewModels.Product;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ namespace DAL.Contacts.ViewModels.Contacts
     {
 
         public IEnumerable<Contact> contactDetails { get; set; }
+
+        public List<DAL_Column_BehaviourViewModel> columnCredits { get; set; }
         public int? pageNumber { get; set; }
         public int? pageSize { get; set; }
         public int? dataCount { get; set; }

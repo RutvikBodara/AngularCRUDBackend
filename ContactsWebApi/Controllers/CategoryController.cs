@@ -23,7 +23,7 @@ namespace ContactsWebApi.Controllers
 
         [HttpGet]
         [Route("~/category/getcategory")]
-        public async Task<DAL_Standard_Response<IEnumerable<categoryDetailViewModel>>> GetCategory(string? commonsearch)
+        public async Task<DAL_Standard_Response<IEnumerable<categoryDetailViewModel>>> GetCategory(string? commonsearch, int? pagenumber, int? pagesize, string? sortedcolumn, string? sorteddirection)
         {
             DAL_Standard_Response<IEnumerable<categoryDetailViewModel>> responseAPI = new DAL_Standard_Response<IEnumerable<categoryDetailViewModel>>();
             IEnumerable<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel> errorList = new List<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel>();
@@ -50,11 +50,16 @@ namespace ContactsWebApi.Controllers
             try
             {
 
-                IQueryable<categoryDetailViewModel> CategoryDetails = await _IBAL_Category_CRUD.get<categoryDetailViewModel>(commonsearch);
+                patentCategoryDetailsViewModel CategoryDetails = await _IBAL_Category_CRUD.get<categoryDetailViewModel>(commonsearch, pagenumber, pagesize, sortedcolumn, sorteddirection);
                 var errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 100);
                 responseAPI.code = errorCodeValue.errorCode;
                 responseAPI.message = errorCodeValue.message;
-                responseAPI.responseData = CategoryDetails;
+                responseAPI.pageNumber = CategoryDetails.pageNumber;
+                responseAPI.dataCount = CategoryDetails.dataCount;
+                responseAPI.columnCredits=CategoryDetails.columnCredits;
+                responseAPI.pageSize = CategoryDetails.pageSize;
+                responseAPI.maxPage = CategoryDetails.maxPage;
+                responseAPI.responseData = CategoryDetails.CategoryDetails;
                 return responseAPI;
             }
             catch (Exception ex)
@@ -244,5 +249,7 @@ namespace ContactsWebApi.Controllers
                 return responseAPI;
             }
         }
+
+
     }
 }
