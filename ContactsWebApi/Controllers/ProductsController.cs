@@ -290,6 +290,69 @@ namespace ContactsWebApi.Controllers
             }
         }
 
+        [HttpDelete]
+        [Route("~/product/deletebulkproduct")]
+        public async Task<DAL_ResponseWithOutBody> DeleteBulkProudct(string idlist)
+        {
+            DAL_ResponseWithOutBody responseAPI = new DAL_ResponseWithOutBody();
+            IEnumerable<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel> errorList = new List<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel>();
+            try
+            {
+                errorList = await _ICommonMethods.AddErrorCode<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel>("Contact_CRUD");
+            }
+            catch (Exception ex)
+            {
+                responseAPI.code = 110;
+                responseAPI.message = "Error in ErrorCode Fetch";
+
+                return responseAPI;
+            }
+
+            //var apiKey = HttpContext.Request.Headers["API-KEY"].FirstOrDefault();
+            //if (apiKey != _Configuration["APIKey"])
+            //{
+            //    var errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 106);
+            //    responseAPI.code = errorCodeValue.errorCode;
+            //    responseAPI.message = errorCodeValue.message;
+            //    return responseAPI;
+            //}
+
+            try
+            {
+                var errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 102);
+                if (idlist == null)
+                {
+                    responseAPI.code = errorCodeValue.errorCode;
+                    responseAPI.message = errorCodeValue.message;
+                    return responseAPI;
+                }
+                bool deleteStatus = await _IBAL_Products_CRUD.deleteBulk(idlist);
+                if (deleteStatus)
+                {
+                    errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 100);
+                    responseAPI.code = errorCodeValue.errorCode;
+                    responseAPI.message = errorCodeValue.message;
+                    return responseAPI;
+                }
+                else
+                {
+                    errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 105);
+                    responseAPI.code = errorCodeValue.errorCode;
+                    responseAPI.message = errorCodeValue.message;
+                    return responseAPI;
+                }
+            }
+            catch (Exception e)
+            {
+                var errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 101);
+                responseAPI.code = errorCodeValue.errorCode;
+                responseAPI.message = errorCodeValue.message;
+                return responseAPI;
+            }
+        }
+
+
+
 
         [HttpGet]
         [Route("~/product/getproductbycategory")]

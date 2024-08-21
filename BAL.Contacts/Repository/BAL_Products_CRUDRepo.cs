@@ -110,6 +110,9 @@ namespace BAL.Contacts.Repository
 
             //add editable columns
             List<DAL_Column_BehaviourViewModel> columnFields = new List<DAL_Column_BehaviourViewModel>();
+            DAL_Column_BehaviourViewModel subColumnDefault = new DAL_Column_BehaviourViewModel();
+            subColumnDefault.columnName = "checkBox";
+            columnFields.Add(subColumnDefault);
 
             var firstItem = query.FirstOrDefault();
             if (firstItem != null)
@@ -407,6 +410,34 @@ namespace BAL.Contacts.Repository
                 return false;
             }
             return false;
+        }
+        public async Task<bool> deleteBulk(string idlist)
+        {
+            string[] productIds = idlist.Split(',');
+
+            using (var transaction = await _db.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    foreach (string id in productIds)
+                    {
+                        bool status = await delete<int>(int.Parse(id));
+                        if (!status)
+                        {
+                            throw new Exception();
+                        }
+                    }
+
+                    await transaction.CommitAsync();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                    // Log the exception as needed
+                    return false;
+                }
+            }
         }
         public async Task<bool> exists<T>(int id) where T : class
         {
