@@ -26,7 +26,7 @@ namespace ContactsWebApi.Controllers
 
         [HttpGet]
         [Route("~/product/getproducts")]
-        public async Task<DAL_Standard_Response<IEnumerable<productDetailsViewModel>>> GetProducts(string? commonsearch, int? pagenumber, int? pagesize,string? sortedcolumn,string? sorteddirection )
+        public async Task<DAL_Standard_Response<IEnumerable<productDetailsViewModel>>> GetProducts(string? commonsearch, int? pagenumber, int? pagesize,string? sortedcolumn,string? sorteddirection, bool? download)
         {
             DAL_Standard_Response<IEnumerable<productDetailsViewModel>> responseAPI = new DAL_Standard_Response<IEnumerable<productDetailsViewModel>>();
             IEnumerable<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel> errorList = new List<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel>();
@@ -52,7 +52,7 @@ namespace ContactsWebApi.Controllers
             //}
             try
             {
-                patentProductDetailsViewModel productDetails =await _IBAL_Products_CRUD.get<productDetailsViewModel>(commonsearch, pagenumber, pagesize, sortedcolumn, sorteddirection);
+                patentProductDetailsViewModel productDetails =await _IBAL_Products_CRUD.get<productDetailsViewModel>(commonsearch, pagenumber, pagesize, sortedcolumn, sorteddirection,download);
 
                 var errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 100);
                 responseAPI.code = errorCodeValue.errorCode;

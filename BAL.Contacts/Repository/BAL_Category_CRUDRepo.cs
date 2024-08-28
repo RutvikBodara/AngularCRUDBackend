@@ -36,7 +36,8 @@ namespace BAL.Contacts.Repository
                                    && (commonsearch == null
                                        || x1.Id.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())
                                        || x1.Name.Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())
-                                       || x1.Createddate.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower()))
+                                       //|| x1.Createddate.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())
+                                       )
                                    group new { x1, X2 } by new { x1.Id, x1.Name, x1.Createddate } into G
                                    orderby G.Key.Id
                                    select new categoryDetailViewModel()

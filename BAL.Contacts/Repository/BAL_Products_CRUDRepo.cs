@@ -27,7 +27,7 @@ namespace BAL.Contacts.Repository
         {
             _db = db;
         }
-        public async Task<patentProductDetailsViewModel> get<T>(string? commonsearch, int? pagenumber, int? pagesize, string? sortedcolumn, string? sorteddirection)
+        public async Task<patentProductDetailsViewModel> get<T>(string? commonsearch, int? pagenumber, int? pagesize, string? sortedcolumn, string? sorteddirection, bool? download)
         {
 
             //List<Product> product = _db.Products.ToList();
@@ -39,9 +39,9 @@ namespace BAL.Contacts.Repository
                                                               && (commonsearch == null
                                                                   || x1.Id.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())
                                                                   || x1.Name.Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())
-                                                                  || x2.Name.Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())
-                                                                  || x1.Createddate.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())
-                                                                  || (x1.Updatedby != null && x1.Updatedby.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower()))
+                                                                  //|| x2.Name.Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())
+                                                                  //|| x1.Createddate.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())
+                                                                  //|| (x1.Updatedby != null && x1.Updatedby.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower()))
                                                                   || x1.Description.Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())
                                                                   || (x1.HelplineNumber != null && x1.HelplineNumber.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())))
                                                               orderby x1.Id
@@ -65,8 +65,40 @@ namespace BAL.Contacts.Repository
                                                                   availableForSale = x1.Availableforsale
                                                               }).AsQueryable();
 
-
-
+            if (download == true)
+            {
+                query = (IQueryable<productDetailsViewModel>)(from x1 in _db.Products
+                                                              join x2 in _db.Categories on x1.Categoryid equals x2.Id
+                                                              where x1.IsDeleted != true
+                                                              && (commonsearch == null
+                                                                  || x1.Id.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())
+                                                                  || x1.Name.Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())
+                                                                  || x2.Name.Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())
+                                                                  || x1.Createddate.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())
+                                                                  || (x1.Updatedby != null && x1.Updatedby.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower()))
+                                                                  || x1.Description.Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())
+                                                                  || (x1.HelplineNumber != null && x1.HelplineNumber.ToString().Replace(" ", string.Empty).ToLower().Contains(commonsearch.Replace(" ", string.Empty).ToLower())))
+                                                              orderby x1.Id
+                                                              select new productDetailsViewModel
+                                                              {
+                                                                  id = x1.Id,
+                                                                  name = x1.Name,
+                                                                  categoryName = x2.Name,
+                                                                  categoryId = x2.Id,
+                                                                  createddate = x1.Createddate,
+                                                                  description = x1.Description,
+                                                                  updatedDate = x1.Updatedby,
+                                                                  helplineNumber = x1.HelplineNumber.ToString() ?? "",
+                                                                  rating = x1.Rating,
+                                                                  //image = x1.ProductImage,
+                                                                  imageName = x1.Image,
+                                                                  launchDate = x1.LaunchDate.ToString(),
+                                                                  lastDate = x1.LastDate.ToString(),
+                                                                  price = x1.Price,
+                                                                  countryServed = x1.CountryServed,
+                                                                  availableForSale = x1.Availableforsale
+                                                              }).AsQueryable();
+            }
             patentProductDetailsViewModel model = new patentProductDetailsViewModel();
             model.maxPage = ((query.Count() % pagesize == 0) ? query.Count() % pagesize : (query.Count() % pagesize) + 1);
             model.dataCount = query.Count();
@@ -98,15 +130,17 @@ namespace BAL.Contacts.Repository
             }
 
             // Apply pagination if necessary
-            if (pagenumber.HasValue && pagesize.HasValue)
+            if (pagenumber.HasValue && pagesize.HasValue && download != true)
             {
                 query = query.Skip((pagenumber.Value - 1) * pagesize.Value).Take(pagesize.Value);
             }
             else
             {
+                if (download != true)
+                {
                 query = query.Take(5);
+                }
             }
-
 
             //add editable columns
             List<DAL_Column_BehaviourViewModel> columnFields = new List<DAL_Column_BehaviourViewModel>();

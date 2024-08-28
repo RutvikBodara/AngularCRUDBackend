@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BAL.Contacts")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+36982751c480190b5d11fb8ddb6dc89bd0e14ace")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b84cceda537a597b8822e4e046af44214917092a")]
 [assembly: System.Reflection.AssemblyProductAttribute("BAL.Contacts")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BAL.Contacts")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
