@@ -4,12 +4,14 @@ using DAL.Contacts.DataModels;
 using DAL.Contacts.ViewModels.API.Output;
 using DAL.Contacts.ViewModels.Product;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.ComponentModel;
+using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ContactsWebApi.Controllers
 {
     [ApiController]
-
     [CustomAuth()]
     public class ProductsController : Controller
     {
@@ -63,6 +65,57 @@ namespace ContactsWebApi.Controllers
                 responseAPI.maxPage =productDetails.maxPage;
                 responseAPI.columnCredits=productDetails.columnCredits;
                 responseAPI.responseData =productDetails.ProductDetails;
+                return responseAPI;
+            }
+            catch (Exception ex)
+            {
+                var errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 101);
+                responseAPI.code = errorCodeValue.errorCode;
+                responseAPI.message = errorCodeValue.message;
+                responseAPI.responseData = null;
+                return responseAPI;
+            }
+        }
+
+        [HttpGet]
+        [Route("~/product/getproductsbase64")]
+        public async Task<DAL_Standard_Response<string>> GetProductsBase64(bool? download,int? doctype)
+        {
+            DAL_Standard_Response<string> responseAPI = new DAL_Standard_Response<string>();
+            IEnumerable<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel> errorList = new List<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel>();
+            try
+            {
+                errorList = await _ICommonMethods.AddErrorCode<DAL.Contacts.ViewModels.EroorCodes.EroorCodeViewModel>("Contact_CRUD");
+            }
+            catch (Exception ex)
+            {
+                responseAPI.code = 110;
+                responseAPI.message = "Error in ErrorCode Fetch";
+                //responseAPI.responseData = null;
+                return responseAPI;
+            }
+
+            //var apiKey = HttpContext.Request.Headers["API-KEY"].FirstOrDefault();
+            //if (apiKey != _Configuration["APIKey"])
+            //{
+            //    var errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 106);
+            //    responseAPI.code = errorCodeValue.errorCode;
+            //    responseAPI.message = errorCodeValue.message;
+            //    return responseAPI;
+            //}
+            try
+            {
+                patentProductDetailsViewModel productDetails = await _IBAL_Products_CRUD.get<productDetailsViewModel>(null, null, null, null, null, download);
+
+                var errorCodeValue = errorList.FirstOrDefault(x => x.errorCode == 100);
+                responseAPI.code = errorCodeValue.errorCode;
+                responseAPI.message = errorCodeValue.message;
+                //responseAPI.pageNumber = productDetails.pageNumber;
+                //responseAPI.dataCount = productDetails.dataCount;
+                //responseAPI.pageSize = productDetails.pageSize;
+                //responseAPI.maxPage = productDetails.maxPage;
+                //responseAPI.columnCredits = productDetails.columnCredits
+                responseAPI.responseData = await _ICommonMethods.DTOToBase64(productDetails.ProductDetails,productDetails.columnCredits,doctype);
                 return responseAPI;
             }
             catch (Exception ex)
@@ -351,9 +404,6 @@ namespace ContactsWebApi.Controllers
             }
         }
 
-
-
-
         [HttpGet]
         [Route("~/product/getproductbycategory")]
         public async Task<DAL_Standard_Response<IQueryable<productDetailsViewModel>>> GetProductsByCategory(int id)
@@ -399,7 +449,5 @@ namespace ContactsWebApi.Controllers
                 return responseAPI;
             }
         }
-
-
     }
 }
